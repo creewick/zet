@@ -1,0 +1,21 @@
+{
+    "extends": "airbnb",
+    "globals": {
+        "localStorage": true,
+        "navigator": true,
+        "document": true,
+        "fetch": true,
+        "window": true
+    },
+    "rules": {
+        "indent": ["error", 4, {
+            "ignoredNodes": ["JSXElement", "JSXOpeningElement"]
+        }],
+        "max-len": ["error", { "code": 120 }],
+        "react/jsx-indent": ["error", 2],
+        "react/jsx-indent-props": ["error", 2],
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "react/jsx-props-no-spreading": ["off"],
+        "react/jsx-fragments": ["off"]
+    }
+}
