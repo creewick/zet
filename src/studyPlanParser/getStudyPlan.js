@@ -1,4 +1,7 @@
-const isModulesHeader = (tr) => tr.getElementsByClassName('c1')[0].innerText.includes('модули');
+const isModulesHeader = (tr) => tr
+    .getElementsByClassName('c1')[0]
+    .innerText
+    .includes('модули');
 
 const getModule = (tr) => {
     const cells = tr.getElementsByTagName('td');
@@ -32,7 +35,7 @@ const getCourse = (tr) => {
     const name = cells[0].innerText.match(/(\d+\.\d+\.\d+) (.*)/);
     const points = parseInt(cells[1].innerText, 10);
     const types = cells[2].innerText.split(', ');
-    const semesters = cells[3].innerText.split(', ').map(parseInt);
+    const semesters = cells[3].innerText.split(', ').map((x) => parseInt(x, 10));
 
     return {
         code: name[1],
@@ -43,7 +46,7 @@ const getCourse = (tr) => {
     };
 };
 
-export default (htmlAsString) => {
+function getStudyPlan(htmlAsString) {
     const html = document.createElement('html');
     html.innerHTML = htmlAsString;
 

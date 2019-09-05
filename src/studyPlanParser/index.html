@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="getStudyPlan.js"></script>
+    <script>
+        fetch('https://raw.githubusercontent.com/creewick/zet/master/src/studyPlanParser/plan.html')
+            .then(x => x.text())
+            .then(getStudyPlan)
+            .then(x => `export default ${JSON.stringify(x)}`)
+            .then(plan => {
+                document.getElementsByTagName('body')[0].innerText = plan;
+            })
+    </script>
+</head>
+<body>
+
+</body>
+</html>
