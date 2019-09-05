@@ -1,10 +1,9 @@
-import plan from './planJson';
+import plan from './htmlParser/planJson';
 
 const flagCourses = (courses, isRequired) => courses.map((c) => ({ ...c, isRequired }));
 
-const joinRequiredAdditional = (({ courses }) =>
-    flagCourses(courses.required, true)
-        .concat(flagCourses(courses.additional, false)));
+const joinRequiredAdditional = (({ courses }) => flagCourses(courses.required, true)
+    .concat(flagCourses(courses.additional, false)));
 
 const list = plan
     .modules
