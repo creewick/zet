@@ -18,9 +18,9 @@ const isRequired = (line) => {
     return !type.includes('По выбору');
 };
 
-const regex = new RegExp(/(\d+\.\d+)\.\d+ (.*)/);
+const regex = new RegExp(/((\d+\.\d+)\.\d+) (.*)/);
 
-const getCourse = (line, required) => {
+function getCourse(line, required) {
     const cells = line
         .querySelectorAll('td')
         .map((x) => x.rawText);
@@ -35,14 +35,15 @@ const getCourse = (line, required) => {
         .map((x) => parseInt(x, 10));
 
     return {
-        moduleCode: name[1],
-        name: name[2],
+        mod: name[2],
+        code: name[1],
+        name: name[3],
         points,
         types,
         semesters,
         required,
     };
-};
+}
 
 function parseHtml(str) {
     const courses = [];
