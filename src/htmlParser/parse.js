@@ -6,75 +6,58 @@ const isModulesHeader = (line) => line
     .rawText
     .includes('модули');
 
-const getModule = (line) => {
-    const cells = line.querySelectorAll('td');
-    const name = cells[0].rawText
-        .match(/(М\.\d+\.\d+) (.*)/);
-
-    return {
-        code: name[1],
-        name: name[2],
-        points: parseInt(cells[1].rawText, 10),
-        courses: {
-            required: [],
-            additional: [],
-        },
-    };
-};
-
-const getType = (line) => {
+const isRequired = (line) => {
     const name = line.querySelector('i').rawText;
 
     if (name.includes('Контроль')) return null;
-    return name.includes('По выбору')
-        ? 'additional'
-        : 'required';
+    return !name.includes('По выбору');
 };
 
-const getCourse = (line) => {
+const getCourse = (line, required) => {
     const cells = line.querySelectorAll('td');
+
     if (cells.length < 4) return null;
 
-    const name = cells[0].rawText.match(/(\d+\.\d+\.\d+) (.*)/);\
+    const name = cells[0].rawText
+        .match(/(\d+\.\d+)\.\d+ (.*)/);
+
+    const points = parseInt(cells[1].rawText, 10);
+
+    const types = cells[2].rawText
+        .split(', ');
+
+    const semesters = cells[3].rawText
+        .split(', ')
+        .map((x) => parseInt(x, 10));
 
     return {
-        code: name[1],
+        moduleCode: name[1],
         name: name[2],
-        points: parseInt(cells[1].rawText, 10),
-        types: cells[2].rawText.split(', '),
-        semesters: cells[3].rawText.split(', ').map((x) => parseInt(x, 10)),
+        points,
+        types,
+        semesters,
+        required,
     };
 };
 
-function parseHtml(data) {
+function parseHtml(str) {
     const lines = parser
-        .parse(data)
+        .parse(str)
         .querySelector('.edication-plan')
         .querySelectorAll('tr');
 
-    const result = { modules: [] };
-    const status = { mod: null, type: null };
+    const courses = [];
+    let required = null;
 
     for (const line of lines) {
         const type = line.classNames[0];
 
         if (type === 'tr-header' && !isModulesHeader(line)) break;
-        if (type === 'tr-second-header') {
-            status.mod = getModule(line);
-            result.modules.push(status.mod);
-        }
-        if (type === 'tr-third-header') {
-            status.type = getType(line);
-        }
-        if (!type) {
-            const course = getCourse(line);
-            if (status.mod && status.type && course) {
-                status.mod.courses[status.type].push(course);
-            }
-        }
+        if (type === 'tr-third-header') required = isRequired(line);
+        if (!type && required != null) courses.push(getCourse(line, required));
     }
 
-    return result;
+    return courses;
 }
 
 function writeToFile(error, data) {
