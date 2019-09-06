@@ -1,1 +1,0 @@
-{"version":3,"sources":["styles.scss"],"names":[],"mappings":"AAIA,cACI,iBAAkB","file":"main.08cb2948.chunk.css","sourcesContent":["@import \"~bootstrap/scss/functions\";\r\n@import \"~bootstrap/scss/variables\";\r\n@import \"~bootstrap/scss/mixins/breakpoints\";\r\n\r\n.progress-bar {\r\n    will-change: width;\r\n}"]}
