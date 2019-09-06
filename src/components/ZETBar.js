@@ -21,10 +21,7 @@ export default function ZETBar() {
         </Progress>
         <Progress multi className="mt-n3 text-center">
           <Progress bar color="transparent" value={sumPercent} className="text-right font-weight-bold pr-1">
-            {sum}
-            {' '}
-/
-            {config.maxPoints}
+            {sum} / {config.maxPoints}
           </Progress>
         </Progress>
       </header>
