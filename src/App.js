@@ -22,7 +22,7 @@ export default function App() {
     const courseView = (c) => (
       <div key={c.code}>
         <Input type="checkbox" id={c.code} checked={selected.includes(c.code)} onChange={() => inputClick(c.code)} />
-          <label htmlFor={c.code}>М.{c.mod} - {c.name} - {c.points / c.semesters.length}</label>
+        <label htmlFor={c.code}>М.{c.mod} - {c.name} - {c.points}</label>
       </div>
     );
 
@@ -37,8 +37,18 @@ export default function App() {
               <div key={i}>
                 <h2>Семестр {i + 1}</h2>
                 <div className="d-flex">
-                  { x.filter((c) => c.required).map(courseView) }
-                  { x.filter((c) => !c.required).map(courseView) }
+                  { x.some((c) => c.required) && (
+                    <div>
+                      <h3>Обязательные</h3>
+                      {x.filter((c) => c.required).map(courseView)}
+                    </div>
+                  )}
+                  { x.some((c) => !c.required) && (
+                    <div>
+                      <h3>Спец. курсы</h3>
+                      {x.filter((c) => !c.required).map(courseView)}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
