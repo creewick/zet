@@ -3,10 +3,10 @@ const fs = require('fs');
 
 const toInt = (str) => parseInt(str, 10) || 0;
 
-const isModulesHeader = (line) => line
+const isBadHeader = (line) => line
     .querySelector('.c1')
     .rawText
-    .includes('модули');
+    .includes('Факультативы');
 
 const getCourseType = (line) => line
     .querySelector('i')
@@ -57,7 +57,7 @@ function parseHtml(str) {
     tableLines.every((line) => {
         const type = line.classNames[0];
 
-        if (type === 'tr-header' && !isModulesHeader(line)) return false;
+        if (type === 'tr-header' && isBadHeader(line)) return false;
         if (type === 'tr-third-header') required = isRequired(line);
         if (!type && required !== null) courses = [...courses, ...getCourses(line, required)];
         return true;
@@ -68,7 +68,7 @@ function parseHtml(str) {
 
 function writeToFile(error, data) {
     const json = parseHtml(data);
-    const str = `export default ${JSON.stringify(json)}`;
+    const str = JSON.stringify(json);
     fs.writeFile('plan.json', str, () => {});
 }
 

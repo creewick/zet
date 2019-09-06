@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Course from './Course';
+import { requiredCourses } from '../studyPlan';
 
 export default function Semester({ courses, index }) {
     const toHtml = (c) => <Course className="col-lg-4 col-sm-6 px-1 py-1" course={c} />;
@@ -18,13 +19,12 @@ export default function Semester({ courses, index }) {
         )
         : null);
 
-
     return (
       <div key={index}>
         <h3>{`Семестр ${index + 1}`}</h3>
         <div className="mb-5">
-          { groupByFilter((c) => c.required, 'Обязательные')}
-          { groupByFilter((c) => !c.required, 'Спец. курсы')}
+          { groupByFilter((c) => requiredCourses.includes(c), 'Обязательные')}
+          { groupByFilter((c) => !requiredCourses.includes(c), 'Спец. курсы')}
         </div>
       </div>
     );

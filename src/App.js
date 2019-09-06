@@ -25,6 +25,9 @@ export default function App() {
                 <Button className="m-3 btn-light btn-outline-danger" onClick={reset}>Сброс</Button>
               </div>
             </div>
+            <p>
+              Кнопка "Сброс" отмечает всё, кроме курсов по выбору.
+            </p>
             { bySemester && bySemester
                 .map((courses, i) => <Semester courses={courses} index={i} />)}
           </Container>
