@@ -1,57 +1,44 @@
-import React, { useMemo } from 'react';
-import { Input } from 'reactstrap';
-import { pointsSum, bySemester, requiredCourses } from './studyPlan';
+import React from 'react';
+import { Container } from 'reactstrap';
+import { bySemester, requiredCourses } from './studyPlan';
 import useLocalStorage from './useLocalStorage';
+import ZETBar from './components/ZETBar';
+import Course from './components/Course';
+import Context from './context';
 
 export default function App() {
-    const [selected, setSelected] = useLocalStorage(
+    const [get, set] = useLocalStorage(
         'selected',
         requiredCourses.map((x) => x.code),
     );
-
-    const sum = useMemo(() => pointsSum(selected), [selected]);
-
-    const inputClick = (code) => {
-        if (selected.includes(code)) {
-            setSelected(selected.filter((c) => c !== code));
-        } else {
-            setSelected([...selected, code]);
-        }
-    };
-
-    const courseView = (c) => (
-      <div key={c.code}>
-        <Input type="checkbox" id={c.code} checked={selected.includes(c.code)} onChange={() => inputClick(c.code)} />
-        <label htmlFor={c.code}>М.{c.mod} - {c.name} - {c.points}</label>
-      </div>
-    );
-
     return (
       <div className="App">
-        <h1>Калькулятор ЗЕТ</h1>
-        <header>
-          <h2>Результат: {sum} из 240.</h2>
-        </header>
-        { bySemester && bySemester
-            .map((x, i) => (
-              <div key={i}>
-                <h2>Семестр {i + 1}</h2>
-                <div className="d-flex">
-                  { x.some((c) => c.required) && (
-                    <div>
-                      <h3>Обязательные</h3>
-                      {x.filter((c) => c.required).map(courseView)}
+        <Context.Provider value={{ get, set }}>
+          <ZETBar />
+          <Container>
+            <h2>Список курсов</h2>
+            { bySemester && bySemester
+                .map((x, i) => (
+                  <div key={i}>
+                    <h3 className="mt-5">Семестр {i + 1}</h3>
+                    <div className="d-flex flex-column flex-md-row">
+                      { x.some((c) => c.required) && (
+                        <div className="p-2 col">
+                          <h5>Обязательные</h5>
+                          {x.filter((c) => c.required).map((c) => <Course course={c} />)}
+                        </div>
+                      )}
+                      { x.some((c) => !c.required) && (
+                        <div className="p-2 col">
+                          <h5>Спец. курсы</h5>
+                          {x.filter((c) => !c.required).map((c) => <Course course={c} />)}
+                        </div>
+                      )}
                     </div>
-                  )}
-                  { x.some((c) => !c.required) && (
-                    <div>
-                      <h3>Спец. курсы</h3>
-                      {x.filter((c) => !c.required).map(courseView)}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
+                  </div>
+                ))}
+          </Container>
+        </Context.Provider>
       </div>
     );
 }
