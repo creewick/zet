@@ -26,6 +26,10 @@ export default function Course({ course }) {
         },
     );
 
+    const textColor = get.includes(course.code)
+        ? 'text-secondary'
+        : 'text-primary';
+
     return (
       <div key={course.code}>
         <Input
@@ -37,11 +41,11 @@ export default function Course({ course }) {
         />
         <label htmlFor={course.code} className={classes}>
           <div className="d-flex flex-column pr-3">
-            <h3 className="m-0 text-center">{course.points}</h3>
-            <p className="m-0">ЗЕТ</p>
+            <h3 className={`m-0 text-center ${textColor}`}>{course.points}</h3>
+            <small className="m-0">ЗЕТ</small>
           </div>
           <div className="d-flex flex-column">
-            <p className="m-0 text-primary">{course.name}</p>
+            <p className={`m-0 ${textColor}`}>{course.name}</p>
             <p className="m-0 text-secondary">Модуль {course.mod}</p>
           </div>
         </label>

@@ -1,42 +1,30 @@
 import React from 'react';
-import { Container } from 'reactstrap';
+import { Container, Button } from 'reactstrap';
 import { bySemester, requiredCourses } from './studyPlan';
 import useLocalStorage from './useLocalStorage';
 import ZETBar from './components/ZETBar';
-import Course from './components/Course';
 import Context from './context';
+import Semester from './components/Semester';
 
 export default function App() {
     const [get, set] = useLocalStorage(
         'selected',
         requiredCourses.map((x) => x.code),
     );
+
+    const reset = () => set(requiredCourses.map((x) => x.code));
+
     return (
       <div className="App">
         <Context.Provider value={{ get, set }}>
           <ZETBar />
           <Container>
-            <h2>Список курсов</h2>
+            <div className="d-flex">
+            <h2 className="mr-3">Список курсов</h2>
+            <Button className="m-1" onClick={reset}>Reset</Button>
+            </div>
             { bySemester && bySemester
-                .map((x, i) => (
-                  <div key={i}>
-                    <h3 className="mt-5">Семестр {i + 1}</h3>
-                    <div className="d-flex flex-column flex-md-row">
-                      { x.some((c) => c.required) && (
-                        <div className="p-2 col">
-                          <h5>Обязательные</h5>
-                          {x.filter((c) => c.required).map((c) => <Course course={c} />)}
-                        </div>
-                      )}
-                      { x.some((c) => !c.required) && (
-                        <div className="p-2 col">
-                          <h5>Спец. курсы</h5>
-                          {x.filter((c) => !c.required).map((c) => <Course course={c} />)}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                .map((courses, i) => <Semester courses={courses} index={i} />)}
           </Container>
         </Context.Provider>
       </div>
