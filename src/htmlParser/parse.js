@@ -1,6 +1,8 @@
 const parser = require('node-html-parser');
 const fs = require('fs');
 
+const toInt = (str) => parseInt(str, 10) || 0;
+
 const isModulesHeader = (line) => line
     .querySelector('.c1')
     .rawText
@@ -20,7 +22,7 @@ const isRequired = (line) => {
 
 const regex = new RegExp(/((\d+\.\d+)\.\d+) (.*)/);
 
-function getCourse(line, required) {
+function getCourses(line, required) {
     const cells = line
         .querySelectorAll('td')
         .map((x) => x.rawText);
@@ -28,25 +30,24 @@ function getCourse(line, required) {
     if (cells.length < 4) return null;
 
     const name = cells[0].match(regex);
-    const points = parseInt(cells[1], 10);
-    const types = cells[2].split(',');
     const semesters = cells[3]
         .split(',')
-        .map((x) => parseInt(x, 10));
+        .map(toInt);
+    const points = toInt(cells[1]) / semesters.length;
 
-    return {
-        mod: name[2],
-        code: name[1],
-        name: name[3],
-        points,
-        types,
-        semesters,
-        required,
-    };
+    return semesters
+        .map((semester) => ({
+            mod: name[2],
+            code: `${name[1]}.${semester}`,
+            name: name[3],
+            points,
+            semester,
+            required,
+        }));
 }
 
 function parseHtml(str) {
-    const courses = [];
+    let courses = [];
     let required = null;
     const tableLines = parser
         .parse(str)
@@ -58,7 +59,7 @@ function parseHtml(str) {
 
         if (type === 'tr-header' && !isModulesHeader(line)) return false;
         if (type === 'tr-third-header') required = isRequired(line);
-        if (!type && required !== null) courses.push(getCourse(line, required));
+        if (!type && required !== null) courses = [...courses, ...getCourses(line, required)];
         return true;
     });
 
@@ -68,7 +69,7 @@ function parseHtml(str) {
 function writeToFile(error, data) {
     const json = parseHtml(data);
     const str = `export default ${JSON.stringify(json)}`;
-    fs.writeFile('plan.js', str, () => {});
+    fs.writeFile('plan.json', str, () => {});
 }
 
 function parseFromFile(filename) {
