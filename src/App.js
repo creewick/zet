@@ -20,8 +20,8 @@ export default function App() {
           <ZETBar />
           <Container>
             <div className="d-flex">
-            <h2 className="mr-3">Список курсов</h2>
-            <Button className="m-1" onClick={reset}>Reset</Button>
+            <h2 className="mt-3 mr-3 mb-0">Калькулятор ЗЕТ</h2>
+            <Button className="m-3 btn-light btn-outline-danger" onClick={reset}>Сброс</Button>
             </div>
             { bySemester && bySemester
                 .map((courses, i) => <Semester courses={courses} index={i} />)}

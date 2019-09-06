@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import context from '../context';
 
-export default function Course({ course }) {
+export default function Course({ course, className }) {
     const ctx = useContext(context);
     const { get, set } = ctx;
 
@@ -18,7 +18,8 @@ export default function Course({ course }) {
 
     const classes = classnames(
         'd-flex',
-        'p-2',
+        'py-2',
+        'h-100',
         {
             'bg-light': !get.includes(course.code),
             'shadow': !get.includes(course.code),
@@ -31,7 +32,7 @@ export default function Course({ course }) {
         : 'text-primary';
 
     return (
-      <div key={course.code}>
+      <div className={className} key={course.code}>
         <Input
           type="checkbox"
           id={course.code}
@@ -40,11 +41,11 @@ export default function Course({ course }) {
           className="d-none"
         />
         <label htmlFor={course.code} className={classes}>
-          <div className="d-flex flex-column pr-3">
+          <div className="d-flex flex-column px-3">
             <h3 className={`m-0 text-center ${textColor}`}>{course.points}</h3>
             <small className="m-0">ЗЕТ</small>
           </div>
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column pr-3">
             <p className={`m-0 ${textColor}`}>{course.name}</p>
             <p className="m-0 text-secondary">Модуль {course.mod}</p>
           </div>
@@ -60,4 +61,5 @@ Course.propTypes = {
         name: PropTypes.string.isRequired,
         points: PropTypes.number.isRequired,
     }).isRequired,
+    className: PropTypes.string.isRequired,
 };

@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import Course from './Course';
 
 export default function Semester({ courses, index }) {
-    const toHtml = (c) => <Course course={c} />;
+    const toHtml = (c) => <Course className="col-lg-4 col-sm-6 px-1 py-1" course={c} />;
 
     const groupByFilter = (filter, title) => (courses.some(filter)
         ? (
-          <div className="p-2 col">
+          <div>
             <h5>{title}</h5>
-            {courses.filter(filter).map(toHtml)}
+            <div className="m-2">
+              <div className="row">
+                {courses.filter(filter).map(toHtml)}
+              </div>
+            </div>
           </div>
         )
         : null);
@@ -17,8 +21,8 @@ export default function Semester({ courses, index }) {
 
     return (
       <div key={index}>
-        <h3 className="mt-5">{`Семестр ${index + 1}`}</h3>
-        <div className="d-flex flex-column flex-md-row">
+        <h3>{`Семестр ${index + 1}`}</h3>
+        <div className="mb-5">
           { groupByFilter((c) => c.required, 'Обязательные')}
           { groupByFilter((c) => !c.required, 'Спец. курсы')}
         </div>
