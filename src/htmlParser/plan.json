@@ -402,7 +402,7 @@
   {
     "mod": "1.17",
     "code": "1.17.1.5",
-    "name": "Air Lab",
+    "name": "Учебный проект 1",
     "points": 3,
     "semester": 5,
     "required": false
@@ -410,7 +410,7 @@
   {
     "mod": "1.17",
     "code": "1.17.2.6",
-    "name": "Air Lab",
+    "name": "Учебный проект 2",
     "points": 3,
     "semester": 6,
     "required": false
