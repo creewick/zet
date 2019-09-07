@@ -20,9 +20,14 @@ export default function App() {
           <ZETBar />
           <Container>
             <div className="d-flex">
-              <div className="d-flex flex-column flex-sm-row">
-                <h2 className="mt-3 mr-3 mb-0">Калькулятор ЗЕТ</h2>
-                <Button className="m-3 btn-light btn-outline-danger" onClick={reset}>Сброс</Button>
+              <div className="mt-3 d-flex flex-column flex-sm-row">
+                <h2 className="mr-3 mb-0">Калькулятор ЗЕТ</h2>
+                <div>
+                  <Button className="m-1 btn-light btn-outline-danger" onClick={reset}>Сброс</Button>
+                  <Button className="m-1 btn-light btn-outline-dark" href="https://github.com/creewick/zet">
+                    Github
+                  </Button>
+                </div>
               </div>
             </div>
             <p>
