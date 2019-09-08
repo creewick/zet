@@ -490,7 +490,7 @@
   {
     "mod": "1.22",
     "code": "1.22.2.7",
-    "name": "Оптимизация структур данных и алгоритмов",
+    "name": "ACM (Спортивное программирование)",
     "points": 3,
     "semester": 7,
     "required": false
@@ -498,7 +498,7 @@
   {
     "mod": "1.22",
     "code": "1.22.3.8",
-    "name": "Оптимизация программного кода",
+    "name": "ACM (Спортивное программирование)",
     "points": 3,
     "semester": 8,
     "required": false
@@ -603,7 +603,7 @@
     "mod": "1.30",
     "code": "1.30.1.7",
     "name": "Численные методы",
-    "points": 3.5,
+    "points": 3,
     "semester": 7,
     "required": false
   },
@@ -611,7 +611,7 @@
     "mod": "1.30",
     "code": "1.30.1.8",
     "name": "Численные методы",
-    "points": 3.5,
+    "points": 4,
     "semester": 8,
     "required": false
   },
@@ -860,6 +860,14 @@
     "code": "1.52.2.6",
     "name": "Разработка веб-приложений",
     "points": 2,
+    "semester": 6,
+    "required": false
+  },
+  {
+    "mod": "unknown",
+    "code": "unknown.1.6",
+    "name": "Веб-разработка (Яндекс)",
+    "points": 3,
     "semester": 6,
     "required": false
   },
