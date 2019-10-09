@@ -858,15 +858,7 @@
   {
     "mod": "1.52",
     "code": "1.52.2.6",
-    "name": "Разработка веб-приложений",
-    "points": 2,
-    "semester": 6,
-    "required": false
-  },
-  {
-    "mod": "unknown",
-    "code": "unknown.1.6",
-    "name": "Веб-разработка (Яндекс)",
+    "name": "Разработка веб-приложений II",
     "points": 3,
     "semester": 6,
     "required": false
